@@ -21,7 +21,7 @@ abRectOutlineGetBounds, abRectOutlineCheck,
 
 Layer fieldLayer = { /* border outline */
   (AbShape *) &fieldOutline,
-  {screenWidth/2, screenHeight/2},
+  {screenWidth/2, screenHeight/2 - 3},
   {0,0}, {0,0},
   COLOR_WHITE,
   0
@@ -36,16 +36,16 @@ Layer ballLayer = {
 Layer p1Layer = { /* bottom paddle */
   (AbShape *)&paddle,
   {(screenWidth/2), (screenHeight/2)+64},
-  {0,0}, {52,144}
-   COLOR_PINK, &ballLayer,
+  {0,0}, {52,144}, 
+  COLOR_PINK, &ballLayer,
 };
 
 Layer p2Layer ={ /* top paddle */
 (AbShape *)&paddle,
 {(screenWidth/2), (screenHeight/2)-70},
   {0,0}, {52,10},
-  COLOR_WHITE,&p1Layer,
-}
+COLOR_WHITE,&p1Layer,
+};
 
 typedef struct MovLayer_s{
   Layer *layer;
@@ -99,7 +99,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers){
 
 Region fence = {{0,LONG_EDGE_PIXELS}, {SHORT_EDGE_PIXELS, LONG_EDGE_PIXELS}}; /* Creates fence region */
 
-void mlAdvance(MovLayer *ml, MovLayer *m2, MovLayer *m3, Region *fence){
+void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2, Region *fence){
   Vec2 newPos;
   u_char axis;
   Region shapeBoundary;
