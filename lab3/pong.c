@@ -7,22 +7,45 @@
 #include <abCircle.h>
 
 #define GREEN_LED BIT6
-#define RED_LED BIT0
 
-AbRect rect10 = {abRectGetBounds, abRectCheck, {10,10}};
+short goal = 1;
+char p1Score = '0';
+char p2Score = '0';
 
-AbRectOutline fieldOutline = {abRectOutlineGetBounds, abRectOutlineCheck,screenWidth/2 - 10, screenHeight/2 - 10};
+AbRect paddle = {abRectGetBounds, abRectCheck, {10,3}};
 
-Layer fieldLayer = {
+AbRectOutline fieldOutline = {
+abRectOutlineGetBounds, abRectOutlineCheck,
+{screenWidth/2 - 10, screenHeight/2 - 10}
+};
+
+Layer fieldLayer = { /* border outline */
   (AbShape *) &fieldOutline,
   {screenWidth/2, screenHeight/2},
   {0,0}, {0,0},
-  COLOR_BLACK,
-  0};
+  COLOR_WHITE,
+  0
+};
 
 Layer ballLayer = {
-  (AbShape *)&circle8, {(screenWidth/2), (screenHeight/2)}, /* will center the ball*/
-  {0,0}, {0,0}, COLOR_GRAY, &fieldLayer};
+  (AbShape *)&circle5,
+  {(screenWidth/2), (screenHeight/2)}, /* will center the ball*/
+  {0,0}, {0,0}, COLOR_STEEL_BLUE, &fieldLayer,
+};
+
+Layer p1Layer = { /* bottom paddle */
+  (AbShape *)&paddle,
+  {(screenWidth/2), (screenHeight/2)+64},
+  {0,0}, {52,144}
+   COLOR_PINK, &ballLayer,
+};
+
+Layer p2Layer ={ /* top paddle */
+(AbShape *)&paddle,
+{(screenWidth/2), (screenHeight/2)-70},
+  {0,0}, {52,10},
+  COLOR_WHITE,&p1Layer,
+}
 
 typedef struct MovLayer_s{
   Layer *layer;
@@ -30,7 +53,9 @@ typedef struct MovLayer_s{
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer m1 = {&ballLayer, {5,5}, 0};
+MovLayer m1 = {&ballLayer, {3,3}, 0};
+MovLayer m2 = {&p1Layer, {5,5}, 0};
+MovLayer m3 = {&p2Layer, {5,5}, 0};
 
 /* the following was retrieved from shapemotiondemo "shapemotion.c" */
 void movLayerDraw(MovLayer *movLayers, Layer *layers){
@@ -43,7 +68,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers){
     Layer *l = movLayer->layer;
     l->posLast = l->pos;
     l->pos = l->posNext;
-      }
+   }
 
   or_sr(8);
 
@@ -74,7 +99,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers){
 
 Region fence = {{0,LONG_EDGE_PIXELS}, {SHORT_EDGE_PIXELS, LONG_EDGE_PIXELS}}; /* Creates fence region */
 
-void mlAdvance(MovLayer *ml, Region *fence){
+void mlAdvance(MovLayer *ml, MovLayer *m2, MovLayer *m3, Region *fence){
   Vec2 newPos;
   u_char axis;
   Region shapeBoundary;
@@ -88,8 +113,65 @@ void mlAdvance(MovLayer *ml, Region *fence){
 	int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
 	newPos.axes[axis] += (2*velocity);
       }	/**< if outside of fence */
+
+      if((ml->layer->posNext.axes[1] >= 134) &&
+      (ml->layer->posNext.axes[0] <= m1->layer->posNext.axes[0]+18 &&
+      ml->layer->posNext.axes[0] >=
+        m1->layer->posNext.axes[0] -18))
+	{
+        int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+        m1->layer->color = COLOR_YELLOW;
+        m2->layer->color = COLOR_RED;
+	 ml->layer->color = COLOR_YELLOW;
+        ml->velocity.axes[0]+= 1;
+        newPos.axes[axis] += (2*velocity);
+        /* buzzer_set_period(1000);*/
+        int redrawScreen = 1;
+      }/* ends if paddle check */
+      else if((ml->layer->posNext.axes[1] <= 21) &&
+      (ml->layer->posNext.axes[0] <=
+       m2->layer->posNext.axes[0] +18 &&
+       ml->layer->posNext.axes[0] >=
+       m2->layer->posNext.axes[0] - 18))
+      {
+        int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
+        m2->layer->color = COLOR_GREEN;
+	 m1->layer->color = COLOR_RED;
+        ml->layer->color = COLOR_GREEN;
+        ml->velocity.axes[0] += 1;
+        newPos.axes[axis] += (2*velocity);
+        /* buzzer_set_period(5000);*/
+        int redrawScreen = 1;
+      }/* end else if ball hits other paddle */
+      else if((ml->layer->posNext.axes[1] == 20))
+      { /* upper bound */
+        m2->layer->color = COLOR_PURPLE;
+        p1Score ++;
+        drawChar5x7(52,152,p1Score, COLOR_WHITE, COLOR_BLACK);
+        newPos.axes[0] = screenWidth/2;
+        newPos.axes[1] = (screenHeight/2);
+        goal = 1;
+        ml->velocity.axes[0] = 5;
+        ml->layer->posNext = newPos;
+        int redrawScreen = 1;
+      }/* ends upper bound check */
+      else if((ml->layer->posNext.axes[1] == 135))
+      { /* lower bounds */
+	 m1->layer->color = COLOR_RED;
+        p2Score++;
+        drawChar5x7(120, 152, p2Score, COLOR_WHITE, COLOR_BLACK);
+        newPos.axes[0] = screenWidth/2;
+        newPos.axes[1] = (screenHeight/2);
+        goal = 1;
+        ml->velocity.axes[0] = 5;
+        ml->layer->posNext = newPos;
+        int redrawScreen = 1;
+       }/* ends lower bounds check */
+      int redrawScreen = 1;
+      if(goal != 1)
+      {ml->layer->posNext = newPos;}
     } /**< for axis */
-    ml->layer->posNext = newPos;
+    /*ml->layer->posNext = newPos;*/
   } /**< for ml */
 }
 
@@ -112,8 +194,10 @@ void main()
   lcd_init();
   shapeInit();
   p2sw_init(1);
+  /*if(goal == 1)
+  {buzzer_set_period(0);}
 
-  shapeInit();
+   shapeInit(); */
 
   layerInit(&ballLayer);
   layerDraw(&ballLayer);
@@ -125,8 +209,10 @@ void main()
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);	              /**< GIE (enable interrupts) */
 
-  drawString5x7(3,152,"TEST1: ", COLOR_WHITE, COLOR_BLACK);
-  drawString5x7(72, 152, "Test2: ", COLOR_GREEN, COLOR_BLACK);
+  drawString5x7(3,152,"Player1: ", COLOR_PINK, COLOR_BLACK);
+  drawString5x7(72, 152, "Player2: ", COLOR_GREEN, COLOR_BLACK);
+  drawChar5x7(52,152, p1Score, COLOR_WHITE, COLOR_BLACK);
+  drawChar5x7(120,152, p2Score, COLOR_WHITE, COLOR_BLACK);
 
   for(;;) { 
     while (!redrawScreen) { /**< Pause CPU if screen doesn't need updating */
@@ -135,7 +221,10 @@ void main()
     }
     P1OUT |= GREEN_LED;       /**< Green led on when CPU on */
     redrawScreen = 0;
+    
     movLayerDraw(&m1, &ballLayer);
+    movLayerDraw(&m2, &p1Layer);
+    movLayerDraw(&m3, &p2Layer);
   }
 }
 
@@ -146,9 +235,41 @@ void wdt_c_handler()
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
   if (count == 15) {
-    mlAdvance(&m1, &fieldFence);
-    if (p2sw_read())
-      redrawScreen = 1;
+    mlAdvance(&m1,&m2, &m3, &fieldFence);
+    u_int switches = p2sw_read();
+    /* if (p2sw_read())
+       redrawScreen = 1;*/
+    if(!(switches & (1 << 1))){
+      if(m2.layer->posNext.axes[0] <= 102)
+	{
+	  m2.layer->posNext.axes[0] += 5;
+	  redrawScreen = 1;
+	  goal = 0;
+	}
+    }
+    else if(!(switches & (1 << 0))){
+      if(m2.layer->posNext.axes[0] >= 27){
+	m2.layer->posNext.axes[0] -= 5;
+	redrawScreen = 1;
+	goal = 0;
+      }
+    }
+    else if(!(switches & (1 << 2))){
+      if(m3.layer->posNext.axes[0] >= 26){
+	m3.layer->posNext.axes[0] -= 5;
+	redrawScreen = 1;
+	goal = 0;
+      }
+    }
+    else if(!(switches & (1 << 3))){
+      if(m3.layer->posNext.axes[0] <= 102)
+	{
+	  m3.layer->posNext.axes[0] += 5;
+	  redrawScreen = 1;
+	  goal = 0;
+	}
+    }
+    redrawScreen = 1;
     count = 0;
   } 
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
