@@ -9,9 +9,11 @@
 
 #define GREEN_LED BIT6
 
-short goal = 1;
-char p1Score = '0';
+short point = 1;
+char p1Score ='0';
 char p2Score = '0';
+u_int p1_count = 0;
+u_int p2_count = 0;
 
 AbRect paddle = {abRectGetBounds, abRectCheck, {15,3}};
 
@@ -116,60 +118,67 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2,  Region *fence){
       }	/**< if outside of fence */
 
       if((ml->layer->posNext.axes[1] >= 134) &&
-      (ml->layer->posNext.axes[0] <= m1->layer->posNext.axes[0]+18 &&
-      ml->layer->posNext.axes[0] >=
-        m1->layer->posNext.axes[0] -18))
-	{
+	 (ml->layer->posNext.axes[0] <= m1->layer->posNext.axes[0]+18 &&
+	  ml->layer->posNext.axes[0] >= m1->layer->posNext.axes[0] -18))
+	{/*bottom player 1*/
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
         m1->layer->color = COLOR_MAGENTA;
         m2->layer->color = COLOR_GREEN;
 	ml->layer->color = COLOR_CYAN;
         ml->velocity.axes[0]+= 1;
         newPos.axes[axis] += (2*velocity);
-        buzzer_set_period(1000);
+        buzzer_set_period(200);
         int redrawScreen = 1;
-      }/* ends if paddle check */
+      }/* ends if*/
       else if((ml->layer->posNext.axes[1] <= 21) &&
-      (ml->layer->posNext.axes[0] <=
-       m2->layer->posNext.axes[0] +18 &&
-       ml->layer->posNext.axes[0] >=
-       m2->layer->posNext.axes[0] - 18))
-      {
+	      (ml->layer->posNext.axes[0] <=
+	       m2->layer->posNext.axes[0] +18 &&
+	       ml->layer->posNext.axes[0] >=
+	       m2->layer->posNext.axes[0] - 18))
+	{/* top player 2*/
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
         m2->layer->color = COLOR_GREEN;
 	m1->layer->color = COLOR_MAGENTA;
         ml->layer->color = COLOR_CYAN;
         ml->velocity.axes[0] += 1;
         newPos.axes[axis] += (2*velocity);
-        buzzer_set_period(5000);
+        buzzer_set_period(100);
         int redrawScreen = 1;
-      }/* end else if ball hits other paddle */
-      else if((ml->layer->posNext.axes[1] == 20)) { /* upper bound */
+      }/* end else if */
+      else if((ml->layer->posNext.axes[1] == 20))
+      { /* upper bound */
         m2->layer->color = COLOR_GREEN;
         p1Score ++;
+	p1_count++;
         drawChar5x7(52,152,p1Score, COLOR_WHITE, COLOR_BLACK);
         newPos.axes[0] = screenWidth/2;
         newPos.axes[1] = (screenHeight/2);
-        goal = 1;
+        point = 1;
         ml->velocity.axes[0] = 5;
         ml->layer->posNext = newPos;
+	buzzer_advance_frequency(1000);
         int redrawScreen = 1;
       }/* ends upper bound check */
       else if((ml->layer->posNext.axes[1] == 135))
       { /* lower bounds */
 	m1->layer->color = COLOR_MAGENTA;
         p2Score++;
+	p2_count++;
         drawChar5x7(120, 152, p2Score, COLOR_WHITE, COLOR_BLACK);
         newPos.axes[0] = screenWidth/2;
         newPos.axes[1] = (screenHeight/2);
-        goal = 1;
+        point = 1;
         ml->velocity.axes[0] = 5;
         ml->layer->posNext = newPos;
+	buzzer_advance_frequency(1000);
         int redrawScreen = 1;
        }/* ends lower bounds check */
       int redrawScreen = 1;
-      if(goal != 1)
-      {ml->layer->posNext = newPos;}
+      if(point != 1) /* no score  */
+      {
+	ml->layer->posNext = newPos;
+	buzzer_set_period(0);
+      }
     } /**< for axis */
   } /**< for ml */
 }
@@ -192,8 +201,10 @@ void main()
   configureClocks();
   lcd_init();
   shapeInit();
-  p2sw_init(1);
-  if(goal == 1)
+  p2sw_init(15);
+  buzzer_init();
+  
+  if(point == 1)
   {buzzer_set_period(0);}
 
   /* shapeInit(); */
@@ -233,42 +244,57 @@ void wdt_c_handler()
   static short count = 0;
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
-  if (count == 15) {
-    mlAdvance(&m1,&m2, &m3, &fieldFence);
+
+  if(p1_count == 5 || p2_count == 5){
+    bgColor = COLOR_BLACK;
+    if(p1_count == 5){
+      layerDraw(&p1Layer);
+      drawString5x7(screenWidth/2, screenHeight/2, "PLAYER 1 WINS!", COLOR_MAGENTA, COLOR_BLACK);
+    }
+    else{
+      layerDraw(&p2Layer);
+      drawString5x7(screenWidth/2, screenHeight/2, "PLAYER 2 WINS!", COLOR_GREEN, COLOR_BLACK);
+    }
+  }
+
+  
+  if (count == 20) {
+    mlAdvance(&m1, &m2, &m3, &fieldFence);
     u_int switches = p2sw_read();
-    
+
+    /*player 1 (bottom)*/
     if(!(switches & (1 << 1))){
       if(m2.layer->posNext.axes[0] <= 102)
 	{
 	  m2.layer->posNext.axes[0] += 5;
 	  redrawScreen = 1;
-	  goal = 0;
+	  point = 0;
 	}
     }
-    else if(!(switches & (1 << 0))){
-      if(m2.layer->posNext.axes[0] >= 27){
+    else if(!(switches & (1<<0))){
+     if(m2.layer->posNext.axes[0] >= 27){
 	m2.layer->posNext.axes[0] -= 5;
 	redrawScreen = 1;
-	goal = 0;
+	point = 0;
       }
     }
-    else if(!(switches & (1 << 2))){
+    /*player 2 top */
+    else if(!(switches & (1<<2))){
       if(m3.layer->posNext.axes[0] >= 26){
 	m3.layer->posNext.axes[0] -= 5;
 	redrawScreen = 1;
-	goal = 0;
+	point = 0;
       }
     }
-    else if(!(switches & (1 << 3))){
-      if(m3.layer->posNext.axes[0] <= 102)
-	{
+    else if(!(switches & (1<<3))){
+      if(m3.layer->posNext.axes[0] <= 102){
 	  m3.layer->posNext.axes[0] += 5;
 	  redrawScreen = 1;
-	  goal = 0;
+	  point = 0;
 	}
     }
     redrawScreen = 1;
     count = 0;
-  } 
+  }
   P1OUT &= ~GREEN_LED;		    /**< Green LED off when cpu off */
 }
