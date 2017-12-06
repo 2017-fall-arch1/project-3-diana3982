@@ -2,9 +2,13 @@
 
 ## Project Description
 
-This projec required for us to work with the msp430s
-and creak an iteractive and dynamic game.
+This project required for us to work with the msp430s,
+and create an iteractive and dynamic game.
 I chose to work on making pong.
+
+The paddles represent the different players-- player 1 (bottom) and player 2 (top).
+You score a point when your opponent is not able to guard their wall.
+You win the game if you score 5 points.
 
 * To compile: $ cd project-3-diana3982
 * $ make
