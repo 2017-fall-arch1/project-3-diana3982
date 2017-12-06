@@ -30,21 +30,21 @@ Layer fieldLayer = { /* border outline */
 Layer ballLayer = {
   (AbShape *)&circle5,
   {(screenWidth/2), (screenHeight/2)}, /* will center the ball*/
-  {0,0}, {0,0}, COLOR_STEEL_BLUE, &fieldLayer,
+  {0,0}, {0,0}, COLOR_CYAN, &fieldLayer,
 };
 
 Layer p1Layer = { /* bottom paddle */
   (AbShape *)&paddle,
   {(screenWidth/2), (screenHeight/2)+64},
   {0,0}, {52,144}, 
-  COLOR_PINK, &ballLayer,
+  COLOR_HOT_PINK, &ballLayer,
 };
 
 Layer p2Layer ={ /* top paddle */
 (AbShape *)&paddle,
 {(screenWidth/2), (screenHeight/2)-70},
   {0,0}, {52,10},
-COLOR_WHITE,&p1Layer,
+COLOR_LIME_GREEN,&p1Layer,
 };
 
 typedef struct MovLayer_s{
@@ -120,9 +120,9 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2, Region *fence){
         m1->layer->posNext.axes[0] -18))
 	{
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-        m1->layer->color = COLOR_YELLOW;
-        m2->layer->color = COLOR_RED;
-	 ml->layer->color = COLOR_YELLOW;
+        m1->layer->color = COLOR_CYAN;
+        m2->layer->color = COLOR_HOT_PINK;
+	 ml->layer->color = COLOR_LIME_GREEN;
         ml->velocity.axes[0]+= 1;
         newPos.axes[axis] += (2*velocity);
         /* buzzer_set_period(1000);*/
@@ -135,9 +135,9 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2, Region *fence){
        m2->layer->posNext.axes[0] - 18))
       {
         int velocity = ml->velocity.axes[axis] = -ml->velocity.axes[axis];
-        m2->layer->color = COLOR_GREEN;
-	 m1->layer->color = COLOR_RED;
-        ml->layer->color = COLOR_GREEN;
+        m2->layer->color = COLOR_HOT_PINK;
+	 m1->layer->color = COLOR_CYAN;
+        ml->layer->color = COLOR_CYAN;
         ml->velocity.axes[0] += 1;
         newPos.axes[axis] += (2*velocity);
         /* buzzer_set_period(5000);*/
@@ -145,7 +145,7 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2, Region *fence){
       }/* end else if ball hits other paddle */
       else if((ml->layer->posNext.axes[1] == 20))
       { /* upper bound */
-        m2->layer->color = COLOR_PURPLE;
+        m2->layer->color = COLOR_HOT_PINK;
         p1Score ++;
         drawChar5x7(52,152,p1Score, COLOR_WHITE, COLOR_BLACK);
         newPos.axes[0] = screenWidth/2;
@@ -157,7 +157,7 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2, Region *fence){
       }/* ends upper bound check */
       else if((ml->layer->posNext.axes[1] == 135))
       { /* lower bounds */
-	 m1->layer->color = COLOR_RED;
+	 m1->layer->color = COLOR_CYAN;
         p2Score++;
         drawChar5x7(120, 152, p2Score, COLOR_WHITE, COLOR_BLACK);
         newPos.axes[0] = screenWidth/2;
@@ -209,8 +209,8 @@ void main()
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);	              /**< GIE (enable interrupts) */
 
-  drawString5x7(3,152,"Player1: ", COLOR_PINK, COLOR_BLACK);
-  drawString5x7(72, 152, "Player2: ", COLOR_GREEN, COLOR_BLACK);
+  drawString5x7(3,152,"Player1: ", COLOR_HOT_PINK, COLOR_BLACK);
+  drawString5x7(72, 152, "Player2: ", COLOR_LIME_GREEN, COLOR_BLACK);
   drawChar5x7(52,152, p1Score, COLOR_WHITE, COLOR_BLACK);
   drawChar5x7(120,152, p2Score, COLOR_WHITE, COLOR_BLACK);
 
