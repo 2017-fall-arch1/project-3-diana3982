@@ -1,0 +1,3977 @@
+ _______________________________________
+/ QOTD:                                 \
+|                                       |
+| Y'know how s'm people treat th'r body |
+| like a TEMPLE?                        |
+|                                       |
+| Well, I treat mine like 'n AMUSEMENT  |
+\ PARK... S'great...                    /
+ ---------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+[student@localhost ~]$ cd project-3-diana3982/
+[student@localhost project-3-diana3982]$ make clean
+(cd timerLib; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/timerLib'
+rm -f timerLib.a *.o
+make[1]: Leaving directory '/home/student/project-3-diana3982/timerLib'
+(cd lcdLib; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/lcdLib'
+rm -f libLcd.a *.o *.elf
+make[1]: Leaving directory '/home/student/project-3-diana3982/lcdLib'
+(cd shapeLib; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/shapeLib'
+rm -f libShape.a *.o *.elf
+make[1]: Leaving directory '/home/student/project-3-diana3982/shapeLib'
+(cd p2swLib; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/p2swLib'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/project-3-diana3982/p2swLib'
+(cd p2sw-demo; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/p2sw-demo'
+rm -f *.a *.o *.elf
+make[1]: Leaving directory '/home/student/project-3-diana3982/p2sw-demo'
+(cd shape-motion-demo; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/shape-motion-demo'
+rm -f *.o *.elf
+make[1]: Leaving directory '/home/student/project-3-diana3982/shape-motion-demo'
+(cd circleLib; make clean)
+make[1]: Entering directory '/home/student/project-3-diana3982/circleLib'
+rm -f libCircle.a abCircle.h abCircle_decls.h chordVec.h *.o *.elf makeCircles
+rm -rf circles
+make[1]: Leaving directory '/home/student/project-3-diana3982/circleLib'
+rm -rf lib h
+rm -rf doxygen_docs/*
+[student@localhost project-3-diana3982]$ make
+(cd timerLib; make install)
+make[1]: Entering directory '/home/student/project-3-diana3982/timerLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os   -c -o clocksTimer.o clocksTimer.c
+msp430-elf-as   -o sr.o sr.s
+msp430-elf-ar crs libTimer.a clocksTimer.o sr.o
+mkdir -p ../h ../lib
+mv libTimer.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/project-3-diana3982/timerLib'
+(cd lcdLib; make install)
+make[1]: Entering directory '/home/student/project-3-diana3982/lcdLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-11x16.o font-11x16.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-5x7.o font-5x7.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o font-8x12.o font-8x12.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcdutils.o lcdutils.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o lcddraw.o lcddraw.c
+msp430-elf-ar crs libLcd.a font-11x16.o font-5x7.o font-8x12.o lcdutils.o lcddraw.o
+mkdir -p ../h ../lib
+mv libLcd.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/project-3-diana3982/lcdLib'
+(cd shapeLib; make install)
+make[1]: Entering directory '/home/student/project-3-diana3982/shapeLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o shape.o shape.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o region.o region.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rect.o rect.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o vec2.o vec2.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o layer.o layer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o rarrow.o rarrow.c
+msp430-elf-ar crs libShape.a shape.o region.o rect.o vec2.o layer.o rarrow.o
+mkdir -p ../h ../lib
+mv libShape.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/project-3-diana3982/shapeLib'
+(cd circleLib; make install)
+make[1]: Entering directory '/home/student/project-3-diana3982/circleLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o abCircle.o abCircle.c
+cc -o makeCircles makeCircles.c
+rm -rf circles; mkdir circles
+./makeCircles
+cat _abCircle.h abCircle_decls.h > abCircle.h
+(cd circles; msp430-elf-gcc -I.. -I../../h -mmcu=msp430g2553 -Os -c *.c)
+msp430-elf-ar crs libCircle.a circles/*.o abCircle.o
+mkdir -p ../h ../lib
+cp libCircle.a ../lib
+cp abCircle.h chordVec.h ../h
+make[1]: Leaving directory '/home/student/project-3-diana3982/circleLib'
+(cd p2swLib; make install)
+make[1]: Entering directory '/home/student/project-3-diana3982/p2swLib'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h    -c -o p2switches.o p2switches.c
+msp430-elf-ar crs libp2sw.a p2switches.o
+mkdir -p ../h ../lib
+mv libp2sw.a ../lib
+cp *.h ../h
+make[1]: Leaving directory '/home/student/project-3-diana3982/p2swLib'
+(cd p2sw-demo; make)
+make[1]: Entering directory '/home/student/project-3-diana3982/p2sw-demo'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o p2sw-demo.o p2sw-demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o p2sw-demo.elf p2sw-demo.o -lLcd -lp2sw -lTimer
+make[1]: Leaving directory '/home/student/project-3-diana3982/p2sw-demo'
+(cd shape-motion-demo; make)
+make[1]: Entering directory '/home/student/project-3-diana3982/shape-motion-demo'
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o shapemotion.o shapemotion.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o shapemotion.elf shapemotion.o wdt_handler.o -lTimer -lLcd -lShape -lCircle -lp2sw
+make[1]: Leaving directory '/home/student/project-3-diana3982/shape-motion-demo'
+[student@localhost project-3-diana3982]$ cd lab3
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_init':
+buzzer.c:19:3: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+   make_sound();
+   ^~~~~~~~~~
+buzzer.c: At top level:
+buzzer.c:36:6: warning: conflicting types for 'make_sound'
+ void make_sound(int x){
+      ^~~~~~~~~~
+buzzer.c:19:3: note: previous implicit declaration of 'make_sound' was here
+   make_sound();
+   ^~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 003
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3900 bytes at c220 [section: .text]...
+Writing  138 bytes at d15c [section: .data]...
+Done, 4586 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_init':
+buzzer.c:19:3: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+   make_sound();
+   ^~~~~~~~~~
+buzzer.c: At top level:
+buzzer.c:36:6: warning: conflicting types for 'make_sound'
+ void make_sound(int x){
+      ^~~~~~~~~~
+buzzer.c:19:3: note: previous implicit declaration of 'make_sound' was here
+   make_sound();
+   ^~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 003
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3904 bytes at c220 [section: .text]...
+Writing  138 bytes at d160 [section: .data]...
+Done, 4590 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_init':
+buzzer.c:19:3: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+   make_sound();
+   ^~~~~~~~~~
+buzzer.c: At top level:
+buzzer.c:36:6: warning: conflicting types for 'make_sound'
+ void make_sound(int x){
+      ^~~~~~~~~~
+buzzer.c:19:3: note: previous implicit declaration of 'make_sound' was here
+   make_sound();
+   ^~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3904 bytes at c220 [section: .text]...
+Writing  138 bytes at d160 [section: .data]...
+Done, 4590 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_init':
+buzzer.c:19:3: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+   make_sound();
+   ^~~~~~~~~~
+buzzer.c: At top level:
+buzzer.c:36:6: warning: conflicting types for 'make_sound'
+ void make_sound(int x){
+      ^~~~~~~~~~
+buzzer.c:19:3: note: previous implicit declaration of 'make_sound' was here
+   make_sound();
+   ^~~~~~~~~~
+buzzer.c: In function 'make_sound':
+buzzer.c:39:5: warning: implicit declaration of function 'buzzer_set_frequency' [-Wimplicit-function-declaration]
+     buzzer_set_frequency(1000);
+     ^~~~~~~~~~~~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+buzzer.o: In function `make_sound':
+buzzer.c:(.text+0x4c): undefined reference to `buzzer_set_frequency'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:14: pong.elf] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_init':
+buzzer.c:19:3: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+   make_sound();
+   ^~~~~~~~~~
+buzzer.c: At top level:
+buzzer.c:36:6: warning: conflicting types for 'make_sound'
+ void make_sound(int x){
+      ^~~~~~~~~~
+buzzer.c:19:3: note: previous implicit declaration of 'make_sound' was here
+   make_sound();
+   ^~~~~~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3922 bytes at c220 [section: .text]...
+Writing  138 bytes at d172 [section: .data]...
+Done, 4608 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'mlAdvance':
+pong.c:143:9: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+         make_sound();;
+         ^~~~~~~~~~
+pong.c:152:9: error: 'goal' undeclared (first use in this function)
+         goal = 1;
+         ^~~~
+pong.c:152:9: note: each undeclared identifier is reported only once for each function it appears in
+pong.c: In function 'main':
+pong.c:197:6: error: 'goal' undeclared (first use in this function)
+   if(goal == 1)
+      ^~~~
+pong.c: In function 'wdt_c_handler':
+pong.c:246:4: error: 'score' undeclared (first use in this function)
+    score = 0;
+    ^~~~~
+pong.c:260:2: error: 'goal' undeclared (first use in this function)
+  goal = 0;
+  ^~~~
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'mlAdvance':
+pong.c:128:9: warning: implicit declaration of function 'make_sound' [-Wimplicit-function-declaration]
+         make_sound(0);
+         ^~~~~~~~~~
+pong.c: In function 'wdt_c_handler':
+pong.c:271:4: error: 'goal' undeclared (first use in this function)
+    goal = 0;
+    ^~~~
+pong.c:271:4: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_init':
+buzzer.c:19:3: error: too few arguments to function 'make_sound'
+   make_sound();
+   ^~~~~~~~~~
+In file included from buzzer.c:2:0:
+buzzer.h:7:6: note: declared here
+ void make_sound(int x);
+      ^~~~~~~~~~
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3882 bytes at c220 [section: .text]...
+Writing  138 bytes at d14a [section: .data]...
+Done, 4568 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3916 bytes at c220 [section: .text]...
+Writing  138 bytes at d16c [section: .data]...
+Done, 4602 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'wdt_c_handler':
+pong.c:258:35: error: expected ')' before '{' token
+     else if(!(switches & (1 << 2)){
+                                   ^
+pong.c:275:3: error: expected expression before '}' token
+   }
+   ^
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'wdt_c_handler':
+pong.c:260:35: error: expected ')' before '{' token
+     else if(!(switches & (1 << 2)){
+                                   ^
+pong.c:276:3: error: expected expression before '}' token
+   }
+   ^
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'wdt_c_handler':
+pong.c:260:35: error: expected ')' before '{' token
+     else if(!(switches & (1 << 2)){
+                                   ^
+pong.c:276:7: error: expected expression before '}' token
+       } }
+       ^
+pong.c: At top level:
+pong.c:277:9: error: expected '=', ',', ';', 'asm' or '__attribute__' before '&=' token
+   P1OUT &= ~GREEN_LED;      /**< Green LED off when cpu off */
+         ^~
+pong.c:278:1: error: expected identifier or '(' before '}' token
+ }
+ ^
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3900 bytes at c220 [section: .text]...
+Writing  138 bytes at d15c [section: .data]...
+Done, 4586 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_advance_frequency':
+buzzer.c:23:29: error: 'MAX_PERIOD' undeclared (first use in this function)
+   if((rate > 0 && (period > MAX_PERIOD)) ||
+                             ^~~~~~~~~~
+buzzer.c:23:29: note: each undeclared identifier is reported only once for each function it appears in
+buzzer.c:24:29: error: 'MIN_PERIOD' undeclared (first use in this function)
+      (rate < 0 && (period < MIN_PERIOD))){
+                             ^~~~~~~~~~
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3902 bytes at c220 [section: .text]...
+Writing  138 bytes at d15e [section: .data]...
+Done, 4588 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3898 bytes at c220 [section: .text]...
+Writing  138 bytes at d15a [section: .data]...
+Done, 4584 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3898 bytes at c220 [section: .text]...
+Writing  138 bytes at d15a [section: .data]...
+Done, 4584 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make loac
+make: *** No rule to make target 'loac'.  Stop.
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3900 bytes at c220 [section: .text]...
+Writing  138 bytes at d15c [section: .data]...
+Done, 4586 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make loac
+make: *** No rule to make target 'loac'.  Stop.
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3900 bytes at c220 [section: .text]...
+Writing  138 bytes at d15c [section: .data]...
+Done, 4586 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4046 bytes at c220 [section: .text]...
+Writing  138 bytes at d1ee [section: .data]...
+Done, 4732 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4046 bytes at c220 [section: .text]...
+Writing  138 bytes at d1ee [section: .data]...
+Done, 4732 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4048 bytes at c220 [section: .text]...
+Writing  138 bytes at d1f0 [section: .data]...
+Done, 4734 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4066 bytes at c220 [section: .text]...
+Writing  138 bytes at d202 [section: .data]...
+Done, 4752 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4050 bytes at c220 [section: .text]...
+Writing  138 bytes at d1f2 [section: .data]...
+Done, 4736 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4060 bytes at c220 [section: .text]...
+Writing  138 bytes at d1fc [section: .data]...
+Done, 4746 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3982 bytes at c220 [section: .text]...
+Writing  138 bytes at d1ae [section: .data]...
+Done, 4668 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4028 bytes at c220 [section: .text]...
+Writing  138 bytes at d1dc [section: .data]...
+Done, 4714 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4030 bytes at c220 [section: .text]...
+Writing  138 bytes at d1de [section: .data]...
+Done, 4716 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4062 bytes at c220 [section: .text]...
+Writing  138 bytes at d1fe [section: .data]...
+Done, 4748 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4048 bytes at c220 [section: .text]...
+Writing  138 bytes at d1f0 [section: .data]...
+Done, 4734 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4046 bytes at c220 [section: .text]...
+Writing  138 bytes at d1ee [section: .data]...
+Done, 4732 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4022 bytes at c220 [section: .text]...
+Writing  138 bytes at d1d6 [section: .data]...
+Done, 4708 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c:38:1: error: expected identifier or '(' before '}' token
+ }
+ ^
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+pong.o: In function `.L20':
+pong.c:(.text+0x1d8): undefined reference to `make_sound'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:14: pong.elf] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3984 bytes at c220 [section: .text]...
+Writing  138 bytes at d1b0 [section: .data]...
+Done, 4670 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 3982 bytes at c220 [section: .text]...
+Writing  138 bytes at d1ae [section: .data]...
+Done, 4668 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  530 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c214 [section: .rodata2]...
+Writing 4006 bytes at c220 [section: .text]...
+Writing  138 bytes at d1c6 [section: .data]...
+Done, 4692 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'wdt_c_handler':
+pong.c:248:7: error: too few arguments to function 'drawString5x7'
+       drawString5x7(screenWidth/2, screenHeight/2, "PLAYER 1 WINS!", COLOR_MAGENTA);
+       ^~~~~~~~~~~~~
+In file included from pong.c:4:0:
+../h/lcddraw.h:44:6: note: declared here
+ void drawString5x7(u_char col, u_char row, char *string,
+      ^~~~~~~~~~~~~
+pong.c:252:7: error: too few arguments to function 'drawString5x7'
+       drawString5x7(screenWidth/2, screenHeight/2, "PLAYER 2 WINS!", COLOR_GREEN);
+       ^~~~~~~~~~~~~
+In file included from pong.c:4:0:
+../h/lcddraw.h:44:6: note: declared here
+ void drawString5x7(u_char col, u_char row, char *string,
+      ^~~~~~~~~~~~~
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing  138 bytes at d23c [section: .data]...
+Done, 4812 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing  140 bytes at d23c [section: .data]...
+Done, 4814 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing  140 bytes at d23c [section: .data]...
+Done, 4814 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing  138 bytes at d23c [section: .data]...
+Done, 4812 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c:16:7: error: redefinition of 'p1_count'
+ u_int p1_count = 0;
+       ^~~~~~~~
+pong.c:15:7: note: previous definition of 'p1_count' was here
+ u_int p1_count = 0;
+       ^~~~~~~~
+pong.c: In function 'mlAdvance':
+pong.c:166:2: error: 'p2_count' undeclared (first use in this function)
+  p2_count++;
+  ^~~~~~~~
+pong.c:166:2: note: each undeclared identifier is reported only once for each function it appears in
+pong.c: In function 'wdt_c_handler':
+pong.c:248:23: error: 'p2_count' undeclared (first use in this function)
+   if(p1_count == 5 || p2_count == 5){
+                       ^~~~~~~~
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ git add .
+[student@localhost lab3]$ git commit -m "buttons fixed, added winner"
+[master c918d47] buttons fixed, added winner
+ Committer: student <student@localhost.localdomain>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 8 files changed, 71 insertions(+), 328 deletions(-)
+ delete mode 100644 lab3/#pong.c#
+ delete mode 120000 lab3/.#pong.c
+ rewrite lab3/buzzer.o (100%)
+ rewrite lab3/pong.elf (98%)
+ rewrite lab3/pong.o (89%)
+[student@localhost lab3]$ git push
+Username for 'https://github.com': diana3982
+Password for 'https://diana3982@github.com': Chico3982!
+
+Counting objects: 9, done.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 12.98 KiB | 4.33 MiB/s, done.
+Total 9 (delta 6), reused 0 (delta 0)
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.        
+To https://github.com/2017-fall-arch1/project-3-diana3982.git
+   4efea92..c918d47  master -> master
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean make load
+rm -f *.o *.elf
+make: *** No rule to make target 'make'.  Stop.
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    6 bytes at d23c [section: .text]...
+Writing  142 bytes at d242 [section: .data]...
+Done, 4822 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing    8 bytes at d23c [section: .text]...
+Writing  142 bytes at d244 [section: .data]...
+Done, 4824 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'wdt_c_handler':
+pong.c:251:18: error: 'layer0' undeclared (first use in this function)
+       layerDraw(&layer0);
+                  ^~~~~~
+pong.c:251:18: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: pong.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+pong.c: In function 'wdt_c_handler':
+pong.c:250:5: warning: implicit declaration of function 'winner' [-Wimplicit-function-declaration]
+     winner(0);
+     ^~~~~~
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_advance_frequency':
+buzzer.c:26:41: error: expected ')' before '{' token
+  (rate < 0 && (period < MIN_PERIOD)){
+                                     ^
+buzzer.c:30:1: error: expected expression before '}' token
+ }
+ ^
+buzzer.c: In function 'winner':
+buzzer.c:38:8: error: 'coutner' undeclared (first use in this function)
+ switch(coutner){
+        ^~~~~~~
+buzzer.c:38:8: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_advance_frequency':
+buzzer.c:26:41: error: expected ')' before '{' token
+  (rate < 0 && (period < MIN_PERIOD)){
+                                     ^
+buzzer.c:30:1: error: expected expression before '}' token
+ }
+ ^
+buzzer.c: In function 'winner':
+buzzer.c:38:8: error: 'coutner' undeclared (first use in this function)
+ switch(coutner){
+        ^~~~~~~
+buzzer.c:38:8: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_advance_frequency':
+buzzer.c:26:41: error: expected ')' before '{' token
+  (rate < 0 && (period < MIN_PERIOD)){
+                                     ^
+buzzer.c:30:1: error: expected expression before '}' token
+ }
+ ^
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing  132 bytes at d23c [section: .text]...
+Writing  142 bytes at d2c0 [section: .data]...
+Done, 4948 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   96 bytes at d23c [section: .text]...
+Writing  142 bytes at d29c [section: .data]...
+Done, 4912 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4074 bytes at c23c [section: .text]...
+Writing  142 bytes at d226 [section: .data]...
+Done, 4794 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   82 bytes at d23c [section: .text]...
+Writing  142 bytes at d28e [section: .data]...
+Done, 4898 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   96 bytes at d23c [section: .text]...
+Writing  142 bytes at d29c [section: .data]...
+Done, 4912 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   92 bytes at d23c [section: .text]...
+Writing  142 bytes at d298 [section: .data]...
+Done, 4908 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'buzzer_advance_frequency':
+buzzer.c:26:14: error: 'perio' undeclared (first use in this function)
+ (rate <0 && (perio < MIN_PERIOD))){
+              ^~~~~
+buzzer.c:26:14: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   92 bytes at d23c [section: .text]...
+Writing  142 bytes at d298 [section: .data]...
+Done, 4908 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make loas
+make: *** No rule to make target 'loas'.  Stop.
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   52 bytes at d23c [section: .text]...
+Writing  142 bytes at d270 [section: .data]...
+Done, 4868 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   58 bytes at d23c [section: .text]...
+Writing  142 bytes at d276 [section: .data]...
+Done, 4874 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   52 bytes at d23c [section: .text]...
+Writing  142 bytes at d270 [section: .data]...
+Done, 4868 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4096 bytes at c23c [section: .text]...
+Writing   50 bytes at d23c [section: .text]...
+Writing  142 bytes at d26e [section: .data]...
+Done, 4866 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4036 bytes at c23c [section: .text]...
+Writing  142 bytes at d200 [section: .data]...
+Done, 4756 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4036 bytes at c23c [section: .text]...
+Writing  142 bytes at d200 [section: .data]...
+Done, 4756 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4036 bytes at c23c [section: .text]...
+Writing  142 bytes at d200 [section: .data]...
+Done, 4756 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4014 bytes at c23c [section: .text]...
+Writing  142 bytes at d1ea [section: .data]...
+Done, 4734 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4016 bytes at c23c [section: .text]...
+Writing  142 bytes at d1ec [section: .data]...
+Done, 4736 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4002 bytes at c23c [section: .text]...
+Writing  142 bytes at d1de [section: .data]...
+Done, 4722 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 4002 bytes at c23c [section: .text]...
+Writing  142 bytes at d1de [section: .data]...
+Done, 4722 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3954 bytes at c23c [section: .text]...
+Writing  140 bytes at d1ae [section: .data]...
+Done, 4672 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ mkae clean
+bash: mkae: command not found...
+Similar command is: 'make'
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean make load
+rm -f *.o *.elf
+make: *** No rule to make target 'make'.  Stop.
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+buzzer.c: In function 'winner':
+buzzer.c:39:8: error: 'counter' undeclared (first use in this function)
+ switch(counter){
+        ^~~~~~~
+buzzer.c:39:8: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: buzzer.o] Error 1
+[student@localhost lab3]$ make clean
+rm -f *.o *.elf
+[student@localhost lab3]$ make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o pong.o pong.c
+msp430-elf-gcc -mmcu=msp430g2553 -c   -o wdt_handler.o wdt_handler.s
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o buzzer.o buzzer.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o pong.elf pong.o wdt_handler.o buzzer.o -lTimer -lLcd -lShape -lCircle -lp2sw
+mspdebug rf2500 "prog pong.elf"
+MSPDebug version 0.23 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2015 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Chip info database from MSP430.dll v3.3.1.4 Copyright (C) 2013 TI, Inc.
+
+Trying to open interface 1 on 005
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+Using Olimex identification procedure
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2xx3
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  560 bytes at c000 [section: .rodata]...
+Writing   12 bytes at c230 [section: .rodata2]...
+Writing 3980 bytes at c23c [section: .text]...
+Writing  142 bytes at d1c8 [section: .data]...
+Done, 4700 bytes total
+[student@localhost lab3]$ 

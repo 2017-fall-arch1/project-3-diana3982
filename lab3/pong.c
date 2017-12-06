@@ -127,7 +127,7 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2,  Region *fence){
 	ml->layer->color = COLOR_CYAN;
         ml->velocity.axes[0]+= 1;
         newPos.axes[axis] += (2*velocity);
-        buzzer_set_period(200);
+        
         int redrawScreen = 1;
       }/* ends if*/
       else if((ml->layer->posNext.axes[1] <= 21) &&
@@ -142,7 +142,7 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2,  Region *fence){
         ml->layer->color = COLOR_CYAN;
         ml->velocity.axes[0] += 1;
         newPos.axes[axis] += (2*velocity);
-        buzzer_set_period(100);
+        
         int redrawScreen = 1;
       }/* end else if */
       else if((ml->layer->posNext.axes[1] == 20))
@@ -156,7 +156,7 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2,  Region *fence){
         point = 1;
         ml->velocity.axes[0] = 5;
         ml->layer->posNext = newPos;
-	buzzer_advance_frequency(1000);
+	
         int redrawScreen = 1;
       }/* ends upper bound check */
       else if((ml->layer->posNext.axes[1] == 135))
@@ -170,14 +170,13 @@ void mlAdvance(MovLayer *ml,MovLayer *m1, MovLayer *m2,  Region *fence){
         point = 1;
         ml->velocity.axes[0] = 5;
         ml->layer->posNext = newPos;
-	buzzer_advance_frequency(1000);
+	
         int redrawScreen = 1;
        }/* ends lower bounds check */
       int redrawScreen = 1;
       if(point != 1) /* no score  */
       {
-	ml->layer->posNext = newPos;
-	buzzer_set_period(0);
+	ml->layer->posNext = newPos;	
       }
     } /**< for axis */
   } /**< for ml */
@@ -203,11 +202,6 @@ void main()
   shapeInit();
   p2sw_init(15);
   buzzer_init();
-  
-  if(point == 1)
-  {buzzer_set_period(0);}
-
-  /* shapeInit(); */
 
   layerInit(&ballLayer);
   layerDraw(&ballLayer);
@@ -244,16 +238,18 @@ void wdt_c_handler()
   static short count = 0;
   P1OUT |= GREEN_LED;		      /**< Green LED on when cpu on */
   count ++;
-
+  /* when someone score 5 points there is a winner*/
   if(p1_count == 5 || p2_count == 5){
     bgColor = COLOR_BLACK;
     if(p1_count == 5){
+      winner(0);
       layerDraw(&p1Layer);
-      drawString5x7(screenWidth/2, screenHeight/2, "PLAYER 1 WINS!", COLOR_MAGENTA, COLOR_BLACK);
+      drawString5x7(screenWidth/2 - 38, screenHeight/2, "PLAYER 1 WINS!", COLOR_MAGENTA, COLOR_BLACK);
     }
     else{
+      winner(1);
       layerDraw(&p2Layer);
-      drawString5x7(screenWidth/2, screenHeight/2, "PLAYER 2 WINS!", COLOR_GREEN, COLOR_BLACK);
+      drawString5x7(screenWidth/2 - 38, screenHeight/2, "PLAYER 2 WINS!", COLOR_GREEN, COLOR_BLACK);
     }
   }
 
