@@ -3974,4 +3974,38 @@ Writing   12 bytes at c230 [section: .rodata2]...
 Writing 3980 bytes at c23c [section: .text]...
 Writing  142 bytes at d1c8 [section: .data]...
 Done, 4700 bytes total
+[student@localhost lab3]$ git add .
+[student@localhost lab3]$ git commit -m "assembly for winner"
+[master d3aaffe] assembly for winner
+ Committer: student <student@localhost.localdomain>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 10 files changed, 7038 insertions(+), 27 deletions(-)
+ create mode 100644 lab3/#*shell*#
+ create mode 100644 lab3/*shell*
+ create mode 120000 lab3/.#*shell*
+ rewrite lab3/buzzer.o (100%)
+ create mode 100644 lab3/buzzer.s
+ rewrite lab3/pong.elf (92%)
+ rewrite lab3/pong.o (83%)
+[student@localhost lab3]$ git push
+Username for 'https://github.com': diana3982
+Password for 'https://diana3982@github.com': Chico3982!
+
+Counting objects: 13, done.
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (13/13), 13.45 KiB | 1.92 MiB/s, done.
+Total 13 (delta 7), reused 0 (delta 0)
+remote: Resolving deltas: 100% (7/7), completed with 6 local objects.        
+To https://github.com/2017-fall-arch1/project-3-diana3982.git
+   c918d47..d3aaffe  master -> master
 [student@localhost lab3]$ 
